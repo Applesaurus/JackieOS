@@ -36,7 +36,7 @@ print-bios:
     
 printc:
     mov ah, 0x0F ; white on black
-    mov cx, ax ; save info in ax
+    mov cx, ax ; save char & attrib 
     movzx ax, byte [ypos]
     mov dx, 160
     mul dx
@@ -47,7 +47,7 @@ printc:
     add di, ax ; y offset
     add di, bx ; x offset
     
-    mov ax, cx ; restore ax
+    mov ax, cx ; restore char & attrib
     stosw ; write character in al to first byte of video memory, attribute in ah to second
     add byte [xpos], 1 ; advance x position to the right
     ret
