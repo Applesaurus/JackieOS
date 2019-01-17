@@ -19,7 +19,7 @@ main:
     mov ax, [gs:bx]
     
     mov word [reg16], ax
-    call print16
+    ;call print16
     
     
     
@@ -68,7 +68,8 @@ done:
     ret
 
 msg   db 'Hello World', 13, 10, 0
+xpos db 0
+ypos db 0
 
-; padding and magic number
 times 510 - ($-$$) db 0
 dw 0xaa55 
