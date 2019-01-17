@@ -11,28 +11,29 @@ main:
     cld
     
     mov si, msg
-    call print-bios
+    call printbios
     
     call prints
-    mov gs, 0xb800 ; video memory
+    mov ax, 0xb800 ; video memory
+    mov gs, ax
     mov bx, 0x0000 ; video memory offset
     mov ax, [gs:bx]
     
-    mov word [reg16], ax
+    ;mov word [reg16], ax
     ;call print16
     
     
     
 jmp $ ; jump to current address
     
-print-bios:
+printbios:
     lodsb
     test al, al ; if al is 0, done
     jz done; 
     mov ah, 0x0e ; tty mode
     mov bh, 0;
     int 0x10; print al w/ tty mode
-    jmp bios_print
+    jmp printbios
     
 printc:
     mov ah, 0x0F ; white on black
@@ -41,7 +42,7 @@ printc:
     mov dx, 160
     mul dx
     movzx bx, byte [xpos]
-    sh1 bx, 1
+    shl bx, 1
     
     mov di, 0
     add di, ax ; y offset
@@ -55,7 +56,7 @@ printc:
 prints:
     lodsb
     test al, al
-    jnz cprint
+    jnz printc
     add byte [ypos], 1 ; go down 
     mov byte [xpos], 0 ; go all the way to left
     ret
