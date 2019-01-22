@@ -1,7 +1,4 @@
-[BITS 16]
-[ORG 0]
-
-jmp 0x7C0:main   ; goto segment 07C0
+[ORG 0x7C00]
 
 main:
     xor ax, ax
